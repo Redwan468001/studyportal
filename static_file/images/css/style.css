@@ -1,0 +1,18 @@
+.container_full{
+    width: 100%;
+}
+.container{
+    width: 1440px;
+}
+
+.header_section{
+    display: block;
+}
+.header_sec_left{
+    width: 440px;
+    float: left;
+}
+.header_sec_right{
+    width: 1000px;
+    float: left;
+}

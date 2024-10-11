@@ -1,0 +1,16 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container_full">
+    <div class="container">
+        
+        <h1>{{sng_room.id}} -- {{sng_room.name}}</h1>
+        <h3>Author: {{sng_room.user.username}}</h3>
+        <h5>Created at - {{sng_room.created}} -- Edited at - {{sng_room.updated}}</h5>
+        <p>{{sng_room.description}}</p>
+
+    </div>
+</div>
+
+{% endblock content %}

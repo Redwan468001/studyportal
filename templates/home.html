@@ -1,0 +1,37 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container_full">
+    <div class="container">
+        
+        <div class="section">
+            <div class="createroom">
+                <a href="{% url 'createroom' %}">Create Room</a>
+            </div>
+            <div class="section_left">
+                <div class="topic_sec">
+                    {% for topic in topics %}
+                        <a href="{% url 'topic' topic.id %}">{{topic.name}}</a>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="section_right">
+                {% for room in rooms %}
+                    <a href="{% url 'room' room.id %}">
+                        <span>@{{room.host}}</span>
+                        <h1>{{room.id}} -- {{room.name}}</h1>
+                        <p>{{room.topic}}</p>
+                        <a href="{% url 'edit-room' room.id %}">Edit</a>
+                    </a>
+                {% endfor %}
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock content %}
+
