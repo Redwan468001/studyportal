@@ -9,6 +9,14 @@
         <h3>Author: {{sng_room.user.username}}</h3>
         <h5>Created at - {{sng_room.created}} -- Edited at - {{sng_room.updated}}</h5>
         <p>{{sng_room.description}}</p>
+        
+        <a href="{% url 'create_message' sng_room.id %}">Create Message</a>
+
+        <div class="message">
+            {% for msg in message %}
+                <p>{{msg}} - {{msg.created}}</p>
+            {% endfor %}
+        </div>
 
     </div>
 </div>

@@ -10,7 +10,7 @@
             <div class="section_left">
                 <div class="topic_sec">
                     {% for topic in topics %}
-                        <a href="{% url 'topic' topic.id %}">{{topic.name}}</a>
+                        <a href="{% url 'topic' topic.id %}?q={{topic.name}}">{{topic.name}}</a>
                     {% endfor %}
                 </div>
             </div>
