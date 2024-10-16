@@ -2,6 +2,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from . models import Room, Topic, Message
 from . forms import CreateRoom, CreateMessage
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.contrib import messages
 
 # Create your views here.
 def home(request):
@@ -105,3 +108,34 @@ def message(request, id):
     }
 
     return render(request, 'room_form.html', context)
+
+
+
+# Log in
+def loginPage(request):
+
+    if request.method == "POST":
+        username = request.POST.get('username');
+        password = request.POST.get('password');
+
+        try:
+            user = User.objects.get(username=username);
+        except:
+            messages.error(request, "User not found");
+
+    context = {
+
+    }
+    
+    return render(request, 'login_page.html', context)
+
+
+
+
+
+
+
+
+
+
+
