@@ -1,10 +1,12 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from . models import Room, Topic, Message
 from . forms import CreateRoom, CreateMessage
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
 def home(request):
@@ -49,6 +51,7 @@ def topic(request, id):
 
 
 # Create Room
+@login_required(login_url='login')
 def createroom(request):
     form = CreateRoom()
     if request.method == "POST":
@@ -65,8 +68,13 @@ def createroom(request):
 
 
 # Edit Room
+@login_required(login_url='login')
 def editroom(request, id):
     room = get_object_or_404(Room, id=id)
+
+    if request.user != room.host:
+        return HttpResponse('You are not allowed to update the room')
+
     if request.method == "POST":
         form = CreateRoom(request.POST, instance=room)
         if form.is_valid():
@@ -81,8 +89,12 @@ def editroom(request, id):
     
 
 # Delete room
+@login_required(login_url='login')
 def deleteroom(request, id):
     room = get_object_or_404(Room, id=id)
+
+    if request.user != room.host:
+        return HttpResponse("You are not allowed to delete this room! ")
     
     if request.method == "POST":
         room.delete()
@@ -92,6 +104,7 @@ def deleteroom(request, id):
 
 
 #Message 
+@login_required(login_url='login')
 def message(request, id):
     room = get_object_or_404(Room, id=id)
     form = CreateMessage()
@@ -114,6 +127,8 @@ def message(request, id):
 # Log in
 def loginPage(request):
 
+    page = '';
+
     if request.method == "POST":
         username = request.POST.get('username');
         password = request.POST.get('password');
@@ -123,6 +138,15 @@ def loginPage(request):
         except:
             messages.error(request, "User not found");
 
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user);
+            return redirect('home')
+        else:
+            messages.error(request, "Username or Password does not match!")
+
+
     context = {
 
     }
@@ -130,6 +154,33 @@ def loginPage(request):
     return render(request, 'login_page.html', context)
 
 
+# Log out
+def logoutview(request):
+    logout(request)
+    return redirect('login');
+
+# Registration page
+def registrationpage(request):
+
+    forms = UserCreationForm()
+
+    if request.method == "POST":
+        forms = UserCreationForm(request.POST)
+        if forms.is_valid():
+            user = forms.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, 'An error occur during registeration')
+
+
+    context = {
+        'forms': forms,
+    }
+
+    return render(request, 'registration_page.html', context)
 
 
 

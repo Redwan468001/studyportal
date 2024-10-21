@@ -1,0 +1,27 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="container_full">
+    <div class="container">
+
+        <form action="" method="post">
+
+            {% csrf_token %}
+            {{forms}}
+
+            <button type="submit">Submit</button>
+
+        </form>
+
+        <div>
+            <h2>Already register</h2>
+            <a href="{% url 'login' %}">Log in</a>
+        </div>
+
+    </div>
+</div>
+
+{% endblock content %}

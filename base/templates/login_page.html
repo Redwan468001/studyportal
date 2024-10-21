@@ -7,13 +7,16 @@
     {% csrf_token %}
 
     <lable>Username</lable>
-    <input type="text" value="username" placeholder="Enter username...">
+    <input type="text" name="username" placeholder="Enter username...">
 
     <lable>Password</lable>
-    <input type="password" value="password" placeholder="Enter password...">
+    <input type="password" name="password" placeholder="Enter password...">
 
     <input type="submit" value="Login">
 
 </form>
+
+<h1>New to Site</h1>
+<a href="{% url 'sign-up' %}">Sign Up</a>
 
 {% endblock content %}

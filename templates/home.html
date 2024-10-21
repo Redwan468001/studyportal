@@ -9,7 +9,14 @@
             <form action="{% url 'home' %}">
                 <input type="text" name="q" placeholder="Search room..." >
             </form>
+            
+            {% if request.user.is_authenticated %}
+            <h2>{{request.user}}</h2> <a href="{% url 'logout' %}">Log Out</a>
+            {% else %}
             <a href="{% url 'login' %}">Log In</a>
+            {% endif %}
+
+
         </div>
 
         <div class="section">
