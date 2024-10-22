@@ -2,50 +2,64 @@
 {% load static %}
 {% block content %}
 
+<style>
+
+    .home_page_section{
+        margin-top: 70px;
+    }
+
+</style>
+
 <div class="container_full">
     <div class="container">
-        
-        <div class="search">
-            <form action="{% url 'home' %}">
-                <input type="text" name="q" placeholder="Search room..." >
-            </form>
-            
-            {% if request.user.is_authenticated %}
-            <h2>{{request.user}}</h2> <a href="{% url 'logout' %}">Log Out</a>
-            {% else %}
-            <a href="{% url 'login' %}">Log In</a>
-            {% endif %}
 
+        <div class="home_page_section">
 
-        </div>
+            <div class="section_left home_sec_bg">
+                <div class="sec_left_room_info room_sec_cmn">
+                    <div class="createroom">
+                        <a href="{% url 'createroom' %}">Create Room</a>
+                    </div>
 
-        <div class="section">
-
-            <div class="createroom">
-                <a href="{% url 'createroom' %}">Create Room</a>
+                    <div class="topic_sec">
+                        <a href="{% url 'home' %}">All</a>
+                        {% for topic in topics %}
+                            <a href="{% url 'home' %}?q={{topic.name}}">{{topic.name}}</a>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
 
-            <div class="section_left">
-                <div class="topic_sec">
-                    <a href="{% url 'home' %}">All</a>
-                    {% for topic in topics %}
-                        <a href="{% url 'home' %}?q={{topic.name}}">{{topic.name}}</a>
+            <div class="section_middle">
+                <div class="sec_middle_room room_sec_cmn">
+                    <h2>{{room_count}} available room</h2>
+                    {% for room in rooms %}
+                        <a href="{% url 'room' room.id %}">
+                            <span>@{{room.host}}</span>
+                            <h1>{{room.id}}. {{room.name}}</h1>
+                            <p>{{room.topic}}</p>
+                            <a href="{% url 'edit-room' room.id %}">Edit</a>
+                            <a href="{% url 'delete_room' room.id %}">Delete</a>
+
+                        </a>
                     {% endfor %}
                 </div>
             </div>
 
-            <div class="section_right">
-                <h2>{{room_count}} available room</h2>
-                {% for room in rooms %}
-                    <a href="{% url 'room' room.id %}">
-                        <span>@{{room.host}}</span>
-                        <h1>{{room.id}}. {{room.name}}</h1>
-                        <p>{{room.topic}}</p>
-                        <a href="{% url 'edit-room' room.id %}">Edit</a>
-                        <a href="{% url 'delete_room' room.id %}">Delete</a>
+            <div class="section_right home_sec_bg">
+                <div class="sec_right_activity room_sec_cmn">
+                    <h2>Recent Actvity</h2>
+                    {% for room in rooms %}
+                        <a href="{% url 'room' room.id %}">
+                            <span>@{{room.host}}</span>
+                            <h1>{{room.id}}. {{room.name}}</h1>
+                            <p>{{room.topic}}</p>
+                            <a href="{% url 'edit-room' room.id %}">Edit</a>
+                            <a href="{% url 'delete_room' room.id %}">Delete</a>
 
-                    </a>
-                {% endfor %}
+                        </a>
+                    {% endfor %}
+                </div>
             </div>
 
         </div>

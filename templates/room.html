@@ -5,20 +5,49 @@
 <div class="container_full">
     <div class="container">
         
-        <h1>{{sng_room.id}} -- {{sng_room.name}}</h1>
-        <h3>Author: {{sng_room.user.username}}</h3>
-        <h5>Created at - {{sng_room.created}} -- Edited at - {{sng_room.updated}}</h5>
-        <p>{{sng_room.description}}</p>
-        
-        <a href="{% url 'create_message' sng_room.id %}">Create Message</a>
+        <div class="room_section_left">
+            <h1>{{sng_room.id}} -- {{sng_room.name}}</h1>
+            <h3>Author: {{sng_room.user.username}}</h3>
+            <h5>Created at - {{sng_room.created}} -- Edited at - {{sng_room.updated}}</h5>
+            <p>{{sng_room.description}}</p>
+            
+            {% if request.user.is_authenticated %}
+            <div class="create_message">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="text" name='body' placeholder='Write a comment...'>
+                </form>
+            </div>
+            {% endif %}
 
-        <div class="message">
-            {% for msg in message %}
-                <div class="comment-section">
-                    <p>@{{msg.user}} - {{msg.created|timesince}} ago</p>
-                    <p>{{msg.body}}</p>
+            <div class="message">
+                {% for msg in room_messages %}
+                    <div class="comment-section">
+                        <p>@{{msg.user}} - {{msg.created|timesince}} ago</p>
+                        <p>{{msg.body}}</p>
+                        {% if request.user == msg.user %}
+                            <a href="{% url 'del_message' msg.id %}">Delete</a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+        <div class="room_section_right">
+            <div class="room_participants_sec">
+
+                <h1>Participants</h1>
+
+                <div class="room_participants">
+                    {% for user in participants %}
+
+                        <h2>@{{user.username}}</h2>
+
+                    {% endfor %}
                 </div>
-            {% endfor %}
+
+            </div>
         </div>
 
     </div>

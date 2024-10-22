@@ -1,6 +1,6 @@
 {% load static %}
 
-<div class="container_full"> 
+<div class="container_full" style="background-color: #adacac"> 
     <div class="container">
         <div class="header_section">
             <div class="header_sec_left">
@@ -8,17 +8,28 @@
                     <img src="{% static 'images/logo.png' %}" alt="Logo">
                 </div>
             </div>
+
+            {% comment %} Search bar {% endcomment %}
+            <div class="header_sec_middle">
+                <div class="search">
+                    <form action="{% url 'home' %}">
+                        <input type="text" name="q" placeholder="Search room..." >
+                    </form>
+                </div>
+            </div>
+
             <div class="header_sec_right">
-                <div class="navbar_sec">
-                    <div class="navbar">
-                        <ul>
-                            <li>
-                                <a href="#">Home</a>
-                                <a href="#">Contact</a>
-                                <a href="#">News</a>
-                                <a href="#">Career</a>
-                            </li>
-                        </ul>
+                <div class="user_info_sec">
+                    <div class="user_info">
+                        
+                        {% if request.user.is_authenticated %}
+                        <div class="user_details"> 
+                            <h2>@ {{request.user}}</h2> <a href="{% url 'logout' %}">Log Out</a>
+                        </div>
+                        {% else %}
+                        <a href="{% url 'login' %}">Log In</a>
+                        {% endif %}
+
                     </div>
                 </div>
             </div>

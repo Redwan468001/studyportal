@@ -1,5 +1,10 @@
 <style>
 
+body{
+    background: #1d1d1d;
+    padding: 0;
+    margin: 0;
+}
 .container_full{
     width: 100%;
     display: inline-block;
@@ -17,14 +22,20 @@ img{
     Header Section
 **/
 .header_section{
-    display: block;
+    display: inline-block;
+    width: 100%;
+    padding: 10px 15px;
 }
 .header_sec_left{
     width: 20%;
     float: left;
 }
+.header_sec_middle{
+    width: 50%;
+    float: left;
+}
 .header_sec_right{
-    width: 80%;
+    width: 30%;
     float: left;
 }
 
@@ -33,10 +44,31 @@ img{
     height: 70px;
 }
 
-/**header_sec_right**/
-.navbar{
-    text-align: right;
+/**Header middle (Search bar)**/
+.header_sec_middle .search{
+    width: 80%;
+    align-items: center;
+    display: block;
+    margin-top: 20px;
 }
+.header_sec_middle .search input{
+    width: 100%;
+    align-items: center;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+/**header_sec_right**/
+.user_details{
+    display: flex;
+    float: right;
+}
+.user_details a{
+    margin-top: 25px;
+    margin-left: 10px;
+}
+
 
 
 /**
@@ -53,13 +85,29 @@ img{
 }
 
 .section_left{
-    width: 25%;
+    width: 20%;
+    float: left;
+}
+.section_middle{
+    width: 60%;
     float: left;
 }
 .section_right{
-    width: 75%;
+    width: 20%;
     float: left;
 }
+.room_sec_cmn{
+    background-color: #4a4e5f;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/**Section Middle**/
+
+.sec_middle_room{
+    margin: 0 40px;
+}
+
 
 /**Section Left**/
 
@@ -82,6 +130,17 @@ img{
 /**
     Room page
 **/
+
+.room_section_left{
+    width: 60%;
+    float: left;
+    display: block;
+}
+.room_section_right{
+    width: 38%;
+    float: right;
+    display: block;
+}
 
 /**Comment**/
 

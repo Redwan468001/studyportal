@@ -29,10 +29,22 @@ def home(request):
 # Display Room
 def room(request, id):
     sng_room = get_object_or_404(Room, id=id);
-    message = Message.objects.filter(room=sng_room);
+    room_messages = Message.objects.filter(room=sng_room).order_by('-created');
+    participants = sng_room.participants.all();
+
+    if request.method == "POST":
+        message = Message.objects.create(
+            user=request.user,
+            room=sng_room,
+            body=request.POST.get('body'),
+        )
+        sng_room.participants.add(request.user)
+        return redirect(room, id=sng_room.id);
+
     context = {
         'sng_room': sng_room,
-        'message': message,
+        'room_messages': room_messages,
+        'participants': participants,
     }
     return render(request, 'room.html', context);
 
@@ -122,6 +134,30 @@ def message(request, id):
 
     return render(request, 'room_form.html', context)
 
+
+
+# Delete Message
+def deletemessage(request, id):
+    del_message = get_object_or_404(Message, id=id)
+
+    if request.user != del_message.user:
+        return HttpResponse('You are not allowed to delete the message!')
+    
+    if request.method == "POST":
+        del_message.delete()
+        return redirect('home');
+
+    context = {
+        'del_message': del_message
+    }
+
+    return render(request, 'delete_msg.html', context)
+
+
+# Edit message
+def editmessage(request, id):
+    edit_msg = get_object_or_404(Message, id=id)
+    pass
 
 
 # Log in

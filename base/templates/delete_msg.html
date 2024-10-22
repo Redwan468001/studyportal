@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+{% load static %} 
+
+{% block content %}
+
+<div class="container_full">
+    <div class="container">
+        
+        <div class="section">
+            <h1>Are you sure to delete {{del_message}}? </h1>
+            <form action="" method="post">
+                {% csrf_token %}
+                <button type="submit">Yes, Delete</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
