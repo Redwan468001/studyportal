@@ -17,9 +17,6 @@
 
             <div class="section_left home_sec_bg">
                 <div class="sec_left_room_info room_sec_cmn">
-                    <div class="createroom">
-                        <a href="{% url 'createroom' %}">Create Room</a>
-                    </div>
 
                     <div class="topic_sec">
                         <a href="{% url 'home' %}">All</a>
@@ -27,38 +24,64 @@
                             <a href="{% url 'home' %}?q={{topic.name}}">{{topic.name}}</a>
                         {% endfor %}
                     </div>
+
                 </div>
             </div>
 
             <div class="section_middle">
-                <div class="sec_middle_room room_sec_cmn">
-                    <h2>{{room_count}} available room</h2>
-                    {% for room in rooms %}
-                        <a href="{% url 'room' room.id %}">
-                            <span>@{{room.host}}</span>
-                            <h1>{{room.id}}. {{room.name}}</h1>
-                            <p>{{room.topic}}</p>
-                            <a href="{% url 'edit-room' room.id %}">Edit</a>
-                            <a href="{% url 'delete_room' room.id %}">Delete</a>
+                <div class="sec_middle_room">
 
-                        </a>
-                    {% endfor %}
+                    <div class="room_info_create">
+                            
+                        <div class="avail_cre_room">
+                            <div class="available_room">
+                                <h2>Study Room</h2>
+                                <p>{{room_count}} available room</p>
+                            </div>
+                        </div>
+                        
+                        <div class="avail_cre_room">
+                            <div class="createroom">
+                                <a href="{% url 'createroom' %}">Create Room</a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="room_data room_data_bg">
+                        {% for room in rooms %}
+                            <div class="sng_room_data">
+                                <a href="{% url 'room' room.id %}">
+                                    <span>@{{room.host}}</span>
+                                    <h2>{{room.id}}. {{room.name}}</h2>
+                                    <p>{{room.topic}}</p>
+                                    <a href="{% url 'edit-room' room.id %}">Edit</a>
+                                    <a href="{% url 'delete_room' room.id %}">Delete</a>
+
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+
                 </div>
             </div>
 
             <div class="section_right home_sec_bg">
                 <div class="sec_right_activity room_sec_cmn">
                     <h2>Recent Actvity</h2>
-                    {% for room in rooms %}
-                        <a href="{% url 'room' room.id %}">
-                            <span>@{{room.host}}</span>
-                            <h1>{{room.id}}. {{room.name}}</h1>
-                            <p>{{room.topic}}</p>
-                            <a href="{% url 'edit-room' room.id %}">Edit</a>
-                            <a href="{% url 'delete_room' room.id %}">Delete</a>
 
-                        </a>
-                    {% endfor %}
+                    <div class="room_activity">
+                        {% for message in room_messages %}
+                            <div class="sng_room_activity">
+                                <p>@{{message.user}} <span style="float:right">{{message.created|timesince}}</span></p>
+                                <small style="margin-left:20px;">replied to {{message.room}}</small>
+                                <div class="activity_message">
+                                    <small>{{message.body}}</small>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
                 </div>
             </div>
 

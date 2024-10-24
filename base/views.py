@@ -18,10 +18,13 @@ def home(request):
         );
     topics = Topic.objects.all();
     room_count = rooms.count();
+    room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))
+
     context = {
         'rooms': rooms,
         'topics': topics,
         'room_count': room_count,
+        'room_messages': room_messages,
     }
     return render(request, 'home.html', context);
 
@@ -29,7 +32,7 @@ def home(request):
 # Display Room
 def room(request, id):
     sng_room = get_object_or_404(Room, id=id);
-    room_messages = Message.objects.filter(room=sng_room).order_by('-created');
+    room_messages = Message.objects.filter(room=sng_room)
     participants = sng_room.participants.all();
 
     if request.method == "POST":
