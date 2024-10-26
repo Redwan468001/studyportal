@@ -36,7 +36,7 @@
                         <div class="avail_cre_room">
                             <div class="available_room">
                                 <h2>Study Room</h2>
-                                <p>{{room_count}} available room</p>
+                                <p style="margin-top:5px">{{room_count}} available room</p>
                             </div>
                         </div>
                         
@@ -73,7 +73,7 @@
                     <div class="room_activity">
                         {% for message in room_messages %}
                             <div class="sng_room_activity">
-                                <p>@{{message.user}} <span style="float:right">{{message.created|timesince}}</span></p>
+                                <p>@{{message.user}} <span style="font-size:12px;float:right">{{message.created|timesince}} ago</span></p>
                                 <small style="margin-left:20px;">replied to {{message.room}}</small>
                                 <div class="activity_message">
                                     <small>{{message.body}}</small>
